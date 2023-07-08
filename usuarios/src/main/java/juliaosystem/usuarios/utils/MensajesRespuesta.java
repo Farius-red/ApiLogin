@@ -10,7 +10,10 @@ public enum MensajesRespuesta {
     ACTUALIZADO("Actualizado correctamente"),
     ELIMINADO("Eliminado correctamente"),
     EMAIL_NO_ENCONTRADO("Email o contraseña inválida"),
-    FALLO("Algo salió mal");
+    FALLO("Algo salió mal"),
+
+    USER_ISFOUND("El Usuario ya se encuentra registrado"),
+    USER_lOGEADO("Datos Correctos");
 
     private final String mensaje;
 

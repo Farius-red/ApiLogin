@@ -1,5 +1,6 @@
 package juliaosystem.usuarios.infraestructure.services.primary;
 
+import juliaosystem.usuarios.api.dto.LoginDTO;
 import juliaosystem.usuarios.api.dto.RegisterUserDTO;
 import juliaosystem.usuarios.infraestructure.adapters.primary.UserImpl;
 import juliaosystem.usuarios.utils.PlantillaResponse;
@@ -14,6 +15,10 @@ public class UserService {
     UserImpl userImpl;
    public  Optional<PlantillaResponse<RegisterUserDTO>> add(RegisterUserDTO registerUserDTO){
         return userImpl.registro(registerUserDTO);
+    }
+
+    public  Optional<PlantillaResponse<RegisterUserDTO>> login(LoginDTO loginDTO){
+        return userImpl.login(loginDTO);
     }
 
 }

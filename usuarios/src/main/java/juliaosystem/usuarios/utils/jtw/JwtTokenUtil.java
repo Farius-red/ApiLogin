@@ -7,18 +7,26 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.io.Encoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import java.security.Key;
 import java.util.Date;
 import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtil {
-    @Value("${jwt.secret}")
-    private String jwtSecret;
+
+    private final Key jwtSecret;
+
+    public JwtTokenUtil() {
+        this.jwtSecret = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    }
 
     @Value("${jwt.expiration}")
     private int jwtExpiration;
@@ -36,7 +44,7 @@ public class JwtTokenUtil {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(jwtSecret)
                 .compact();
     }
 

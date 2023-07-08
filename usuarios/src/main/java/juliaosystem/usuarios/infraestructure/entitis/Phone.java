@@ -30,4 +30,7 @@ public class Phone {
     @NotBlank(message = "El código de país es obligatorio")
     private String countrycode;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

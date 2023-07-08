@@ -1,4 +1,4 @@
-package juliaosystem.usuarios.utils;
+package juliaosystem.usuarios.utils.enums;
 
 public enum EmailValidationPattern {
     VALID("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"),

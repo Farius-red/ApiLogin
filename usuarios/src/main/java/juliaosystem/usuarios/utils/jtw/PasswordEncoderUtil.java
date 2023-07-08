@@ -1,7 +1,7 @@
 package juliaosystem.usuarios.utils.jtw;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
+
 
 
 public class PasswordEncoderUtil {

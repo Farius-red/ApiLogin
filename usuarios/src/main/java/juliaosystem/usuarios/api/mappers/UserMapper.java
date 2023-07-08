@@ -1,13 +1,18 @@
 package juliaosystem.usuarios.api.mappers;
 
+import juliaosystem.usuarios.api.dto.PhoneDTO;
 import juliaosystem.usuarios.api.dto.RegisterUserDTO;
+import juliaosystem.usuarios.infraestructure.entitis.Phone;
 import juliaosystem.usuarios.infraestructure.entitis.User;
+import juliaosystem.usuarios.utils.jtw.PasswordEncoderUtil;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Component
 public class UserMapper implements PlantillaMapers<User, RegisterUserDTO> {
+
     @Override
     public List<RegisterUserDTO> getListDTO(List<User> t) {
         List<RegisterUserDTO> registerUserDTOList = new ArrayList<>();
@@ -21,7 +26,6 @@ public class UserMapper implements PlantillaMapers<User, RegisterUserDTO> {
                 .email(user.getEmail())
                 .name(user.getName())
                 .password(user.getPassword())
-                .phones(user.getPhones())
                 .build();
     }
 
@@ -32,14 +36,24 @@ public class UserMapper implements PlantillaMapers<User, RegisterUserDTO> {
         return userList;
     }
 
+    public List<Phone> getPhoneEntity(RegisterUserDTO registerUserDTO) {
+        List<Phone> phoneList = new ArrayList<>();
+        registerUserDTO.getPhones().forEach(phoneDTO -> phoneList.add(Phone.builder()
+                .citycode(phoneDTO.getCityCode())
+                .countrycode(phoneDTO.getCountryCode())
+                .number(phoneDTO.getNumber())
+                .build()));
+        return phoneList;
+    }
     @Override
     public User getEntyti(RegisterUserDTO registerUserDTO) {
         return User.builder()
                 .active(true)
                 .email(registerUserDTO.getEmail())
                 .name(registerUserDTO.getName())
-                .password(registerUserDTO.getPassword())
-                .phones(registerUserDTO.getPhones())
+                .created(LocalDateTime.now())
+                .modified(LocalDateTime.now())
+                .password(PasswordEncoderUtil.encodePassword(registerUserDTO.getPassword()))
                 .build();
     }
 }
