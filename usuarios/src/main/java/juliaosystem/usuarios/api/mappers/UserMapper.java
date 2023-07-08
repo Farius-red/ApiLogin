@@ -5,14 +5,19 @@ import juliaosystem.usuarios.api.dto.RegisterUserDTO;
 import juliaosystem.usuarios.infraestructure.entitis.Phone;
 import juliaosystem.usuarios.infraestructure.entitis.User;
 import juliaosystem.usuarios.utils.jtw.PasswordEncoderUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 @Component
 public class UserMapper implements PlantillaMapers<User, RegisterUserDTO> {
 
+    @Autowired
+    PhoneMapper phoneMapper;
     @Override
     public List<RegisterUserDTO> getListDTO(List<User> t) {
         List<RegisterUserDTO> registerUserDTOList = new ArrayList<>();
@@ -23,9 +28,11 @@ public class UserMapper implements PlantillaMapers<User, RegisterUserDTO> {
     @Override
     public RegisterUserDTO getDTO(User user) {
         return RegisterUserDTO.builder()
+                .id(user.getId())
                 .email(user.getEmail())
                 .name(user.getName())
                 .password(user.getPassword())
+                .phones(phoneMapper.getListDTO(user.getPhones()))
                 .build();
     }
 

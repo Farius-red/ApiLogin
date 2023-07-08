@@ -7,11 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 public class RegisterUserDTO {
+        private UUID id;
         private String name;
         private String email;
         private String password;
